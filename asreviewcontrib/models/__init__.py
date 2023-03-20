@@ -1,1 +1,2 @@
 from asreviewcontrib.models.similarity import SimilarityClassifier
+from asreviewcontrib.models.similarity_classifier import SimilarClassifier
