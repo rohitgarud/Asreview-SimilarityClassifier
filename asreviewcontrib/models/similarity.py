@@ -9,13 +9,16 @@ class SimilarityClassifier(BaseTrainClassifier):
 
     def __init__(
         self,
-        similarity_metric="cosine",  # dot_product
+        similarity_metric="cosine",  # dot_product, euclidean_dist
         combine_strategy="mean",
+        query_mode="relevant",  # relevant_irrelevant_mean, relevant_irrelevant_prod
     ):
 
         super(SimilarityClassifier, self).__init__()
         self._model = SimilarClassifier(
-            similarity_metric=similarity_metric, combine_strategy=combine_strategy
+            similarity_metric=similarity_metric,
+            combine_strategy=combine_strategy,
+            query_mode=query_mode,
         )
 
     def fit(self, X, y):
