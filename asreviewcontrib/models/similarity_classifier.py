@@ -22,11 +22,11 @@ class SimilarClassifier:
         self,
         similarity_metric="cosine",  # dot_product, euclidean_dist
         combine_strategy="mean",
-        query_mode="relevant",  # relevant_irrelevant_mean, relevant_irrelevant_prod
+        proba_mode="relevant",  # relevant_irrelevant_mean, relevant_irrelevant_prod
     ):
         self.similarity_metric = similarity_metric
         self.combine_strategy = combine_strategy
-        self.query_mode = query_mode
+        self.proba_mode = proba_mode
         self.relevant = None
         self.irrelevant = None
         self.relevant_resultant = None
@@ -41,7 +41,7 @@ class SimilarClassifier:
         self.relevant = X[y == 1, :]
         self.relevant_resultant = self._combine_features(self.relevant)
 
-        if self.query_mode in ["relevant_irrelevant_mean", "relevant_irrelevant_prod"]:
+        if self.proba_mode in ["relevant_irrelevant_mean", "relevant_irrelevant_prod"]:
             self.irrelevant = X[y == 0, :]
             self.irrelevant_resultant = self._combine_features(self.irrelevant)
 
@@ -63,9 +63,9 @@ class SimilarClassifier:
             return (sum(features) / len(features)).reshape(1, -1)
 
     def _combine_proba(self, proba_rel, proba_irrel):
-        if self.query_mode == "relevant_irrelevant_mean":
+        if self.proba_mode == "relevant_irrelevant_mean":
             return sum([proba_rel, proba_irrel]) / 2
-        elif self.query_mode == "relevant_irrelevant_prod":
+        elif self.proba_mode == "relevant_irrelevant_prod":
             return proba_rel * proba_irrel
 
     def _cosine(self, X):
