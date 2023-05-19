@@ -1,4 +1,5 @@
 from asreview.models.classifiers.base import BaseTrainClassifier
+
 from asreviewcontrib.models.similarity_classifier import SimilarClassifier
 
 
@@ -6,6 +7,7 @@ class SimilarityClassifier(BaseTrainClassifier):
     """Similarity classifier"""
 
     name = "similarity"
+    label = "Similarity"
 
     def __init__(
         self,
@@ -13,7 +15,6 @@ class SimilarityClassifier(BaseTrainClassifier):
         combine_strategy="mean",
         proba_mode="relevant",  # relevant_irrelevant_mean, relevant_irrelevant_prod
     ):
-
         super(SimilarityClassifier, self).__init__()
         self._model = SimilarClassifier(
             similarity_metric=similarity_metric,
